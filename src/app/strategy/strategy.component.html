@@ -1,0 +1,24 @@
+<div>
+  <mat-list>
+    <mat-list-item *ngFor="let strategy of strategies; let i=index" style="cursor: pointer;"
+    [routerLink]="['/strategy/update/', strategy._id]">
+      <h4 matLine>{{strategy.name}}</h4>
+      <p matLine>{{strategy.description}}</p>
+      <button color="primary" mat-icon-button [routerLink]="['/strategy/create/', strategy._id]">
+        <mat-icon>file_copy</mat-icon>
+      </button>
+      <button color="primary" mat-icon-button (click)="backtest(strategy)">
+        <mat-icon>timer</mat-icon>
+      </button>
+      <button color="primary" mat-icon-button (click)="deploy(strategy)">
+        <mat-icon>cloud_upload</mat-icon>
+      </button>
+      <button color="primary" mat-icon-button [routerLink]="['/strategy/update/', strategy._id]">
+          <mat-icon>edit</mat-icon>
+      </button>
+      <button color="warn" mat-icon-button (click)="onRemove(strategy._id, i)">
+          <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+</div>

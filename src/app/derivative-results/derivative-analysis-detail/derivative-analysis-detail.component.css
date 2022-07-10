@@ -1,0 +1,65 @@
+table {
+    width: 100%;
+    overflow: auto;
+}
+
+.mat-table {
+    overflow-x: scroll;
+}
+
+tr.mat-row:hover {
+    background-color: #a5a5a547;
+}
+
+.mat-cell,
+.mat-header-cell {
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 10px;
+    line-break: unset;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.mat-row,
+.mat-header-row {
+    display: table-row;
+}
+
+.bg-green{
+    background-color: greenyellow;
+}
+
+.bg-red{
+    background-color: #ff6565;
+}
+
+.max-pain-table div{
+    margin: 2px 20px;
+    border: 1px, solid;
+}
+
+mat-list mat-list-item {
+    height: auto;
+}
+
+table tr th{
+    text-align: left;
+}
+
+table tr thead{
+    font-weight: bold;
+}
+
+div.primary{
+    height: 400px;
+}
+
+div.secondary{
+    height: 200px;
+}
+
+.chart-wrapper{
+    display: block;
+    resize: both;
+    overflow: auto;
+}

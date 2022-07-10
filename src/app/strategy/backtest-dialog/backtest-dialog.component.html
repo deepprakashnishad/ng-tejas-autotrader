@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-title>Backtesting {{strategy.name}}</mat-card-title>
+  <mat-card-content>
+    <!-- <mat-form-field appearance="fill">
+      <mat-label>From Datetime</mat-label>
+      <input matInput [owlDateTime]="dtFrom" name="fromDateControl"
+      [owlDateTimeTrigger]="dtFrom" placeholder="From Date Time">
+      <owl-date-time #dtFrom [(ngModel)]="fromDateTime"></owl-date-time>
+      <mat-hint>Start Datetime</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>To Datetime</mat-label>
+      <input matInput [owlDateTime]="dtTo" name="toDateControl"
+      [owlDateTimeTrigger]="dtTo" placeholder="To Datetime">
+      <owl-date-time #dtTo [(ngModel)]="toDateTime"></owl-date-time>
+      <mat-hint>End Datetime</mat-hint>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <label>Date Time Range:</label>
+      <input matInput [(ngModel)]="selectedMoments" [selectMode]="'range'"
+             [owlDateTimeTrigger]="dtPicker3" [owlDateTime]="dtPicker3">
+      <owl-date-time #dtPicker3></owl-date-time>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="done()">Run</button>
+    <button mat-raised-button color="warn" (click)="cancel()">Cancel</button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,24 @@
+.spacer{
+	flex: 1 1 auto;
+}
+
+.navbar{
+	justify-content: space-between;
+}
+
+span{
+	padding-right: 1rem;
+}
+
+.nav-item{
+	cursor: pointer;
+}
+
+div.progress-bar-container{
+  height: 2px;
+  padding:0px;
+  position: sticky;
+  position: -webkit-sticky;
+  z-index: 10000;
+  top: 0;
+}

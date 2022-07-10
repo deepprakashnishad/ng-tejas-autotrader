@@ -1,0 +1,16 @@
+form{
+    width: 100%;
+}
+
+.button-row button, .button-row a{
+    margin-right: 12px;
+}
+
+.techlist{
+    height: 85vh;
+    overflow-y: auto;
+}
+
+.mat-list-item{
+    cursor: pointer;
+}

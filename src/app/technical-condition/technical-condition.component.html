@@ -1,0 +1,8 @@
+<div fxLayout fxLayoutGap="10%">
+  <app-technical-search fxFlex="25%" disabled="true" (selected)="firstTechnicalSelected($event)"
+  [selectedTechnical]="technicalCondition.technical1"></app-technical-search>
+  <app-technical-operator fxFlex="25%" disabled="true" [selectedOperator]="technicalCondition.operator" 
+  (selected)="operatorSelected($event)"></app-technical-operator>
+  <app-technical-search fxFlex="25%" [hidden]="technicalCondition.operator.is_unary" disabled="true" (selected)="secondTechnicalSelected($event)"
+  [selectedTechnical]="technicalCondition.technical2"></app-technical-search>
+</div>

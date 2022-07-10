@@ -1,0 +1,60 @@
+<mat-card>
+  <mat-card-title>{{technical.name}}</mat-card-title>
+  <mat-card-content>
+    <form fxLayout="column" fxLayoutGap="16px">
+      <mat-form-field *ngIf="techargs.indexOf('period')!==-1">
+        <input type="text" placeholder="Period" matInput [formControl]="mPeriodControl" 
+        [(ngModel)]="technical.tech_args['period']">
+      </mat-form-field>
+      <mat-form-field *ngIf="techargs.indexOf('field')!==-1">
+        <mat-select [(value)]="technical.tech_args['field']">
+          <mat-option value="open">open</mat-option>
+          <mat-option value="high">high</mat-option>
+          <mat-option value="low">low</mat-option>
+          <mat-option value="close">close</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="techargs.indexOf('percent_or_value')!==-1">
+        <mat-select [(value)]="technical.tech_args['percent_or_value']">
+          <mat-option value="percent">percent</mat-option>
+          <mat-option value="value">value</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="techargs.indexOf('percent_or_value')!==-1">
+        <mat-select [(value)]="technical.tech_args['candle_choice']">
+          <mat-option value="day_first_candle">Day First Candle</mat-option>
+          <mat-option value="previous_day_last_candle">Previous Day Last Candle</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="techargs.indexOf('type')!==-1">
+        <mat-select [(value)]="technical.tech_args['type']">
+          <mat-option value="simple">simple</mat-option>
+          <mat-option value="exponential">exponential</mat-option>
+          <mat-option value="weighted">weighted</mat-option>
+          <mat-option value="triple">triple</mat-option>
+          <mat-option value="triangular">triangular</mat-option>
+          <mat-option value="double">double</mat-option>
+          <mat-option value="kaufman">kaufman</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="techargs.indexOf('candle_pattern')!==-1">
+        <mat-select [(value)]="technical.tech_args['candle_pattern']">
+          <mat-option value="CDLMARUBOZU">MARUBOZU</mat-option>
+          <mat-option value="CDLMATCHINGLOW">Match Low</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="techargs.indexOf('offset')!==-1">
+        <input type="text" placeholder="Offset" matInput [formControl]="mOffsetControl"
+        [(ngModel)]="technical.tech_args['offset']">
+      </mat-form-field>
+      <mat-form-field *ngIf="techargs.indexOf('value')!==-1">
+        <input type="text" placeholder="Value" matInput [formControl]="mValueControl"
+        [(ngModel)]="technical.tech_args['value']">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="dialogRef.close(this.technical)">Done</button>
+    <button mat-raised-button color="warn" (click)="dialogRef.close()">Cancel</button>
+  </mat-card-actions>
+</mat-card>

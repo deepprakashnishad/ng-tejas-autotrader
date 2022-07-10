@@ -1,0 +1,22 @@
+<div>
+  <div fxLayout fxFlexAlign="center space-around">
+    <div fxFlex><h3 *ngIf="screeners.length===0">No screener found</h3></div>
+    <div fxFlex><a mat-raised-button color="primary" routerLink="create">Create New</a></div>
+  </div>
+  <mat-list *ngIf="screeners.length>0">
+    <mat-list-item *ngFor="let screener of screeners; let i=index" style="cursor: pointer;"
+    [routerLink]="['/screener/update/', screener._id]">
+      <h4 matLine>{{screener.name}}</h4>
+      <p matLine>{{screener.description}}</p>
+      <button color="primary" mat-icon-button [routerLink]="['/screener/create/', screener._id]">
+        <mat-icon>file_copy</mat-icon>
+      </button>
+      <button color="primary" mat-icon-button [routerLink]="['/screener/update/', screener._id]">
+          <mat-icon>edit</mat-icon>
+      </button>
+      <button color="warn" mat-icon-button (click)="onRemove(screener._id, i)">
+          <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-list>
+</div>

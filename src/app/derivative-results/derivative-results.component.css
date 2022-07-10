@@ -1,0 +1,79 @@
+table {
+    width: 100%;
+}
+
+tr.mat-row:hover {
+    background-color: #a5a5a547;
+}
+
+td, th{
+    text-align: center;
+}
+
+.bg-green{
+    color: white;
+    background-color: green;
+}
+
+.bg-red{
+    color: white;
+    background-color: red;
+}
+
+.bg-blue{
+    color: white;
+    background-color: blue;
+}
+
+.bg-ltorange{
+    background-color: rgb(255, 232, 131);
+}
+
+.bg-orange{
+    background-color: rgb(255, 213, 27);
+}
+
+.bg-ltblue{
+    background-color: rgb(42, 202, 255);
+}
+
+mat-header-cell {
+    display:flex;
+    justify-content:flex-end;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+  }
+  
+.example-element-detail {
+    overflow: hidden;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+    background: #efefef;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.pp{
+    font-size: medium;
+}
+
+.pivot-table {
+    border-collapse: collapse;
+}
+  
+.pivot-table, .pivot-table tr th, .pivot-table tr td {
+    border: 1px solid black;
+}

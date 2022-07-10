@@ -1,0 +1,33 @@
+<div fxLayout="row">
+	<div fxFlex>
+		<form>
+			<mat-form-field>
+			  <input 
+				type="text" 
+				placeholder="Select Operator" 
+				matInput 
+				[formControl]="mControl" 
+				[matAutocomplete]="auto" 
+				(click)="onFocus()"
+				[attr.disabled]="disabled?true:null">
+				<button mat-button 
+				  *ngIf="selectedOperator && selectedOperator.name!==''" 
+				  matSuffix 
+				  mat-icon-button 
+				  aria-label="Clear" 
+				  (click)="clearSelection()">
+				<mat-icon>close</mat-icon>
+			  </button>
+			</mat-form-field>
+
+			<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="itemSelected($event)">
+			  <mat-option *ngFor="let item of itemFilteredList | async" [value]="item">{{item.name}}</mat-option>
+			</mat-autocomplete>
+		</form>
+	</div>
+	<div fxFlex="20" *ngIf="!disabled" [hidden]="disabled">
+		<button mat-button color="primary" [routerLink]="['/technical/create']">
+			Create <mat-icon aria-label="Add">add</mat-icon>
+		</button>
+	</div>
+</div>

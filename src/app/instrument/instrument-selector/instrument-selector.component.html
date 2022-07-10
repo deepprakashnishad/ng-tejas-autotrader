@@ -1,0 +1,14 @@
+<mat-form-field>
+  <input type="text"
+          placeholder="Pick stock"
+          aria-label="Pick Stock"
+          matInput
+          [formControl]="instrumentControl"
+          [matAutocomplete]="auto"
+          (focus)="onFocus()">
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let instrument of instrumentFilteredList | async" [value]="instrument.tradingsymbol">
+      {{instrument.tradingsymbol}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

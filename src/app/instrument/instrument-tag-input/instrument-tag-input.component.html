@@ -1,0 +1,27 @@
+<mat-form-field class="full-width">
+	<mat-chip-list #instrumentList>
+	    <mat-chip
+	      *ngFor="let instrument of instruments"
+	      [selectable]="false"
+	      removable="true"
+	      (removed)="remove(instrument)">
+	      {{instrument.tradingsymbol}}
+	      <mat-icon matChipRemove>cancel</mat-icon>
+	    </mat-chip>
+  	</mat-chip-list>
+	<input
+		matInput
+      placeholder="Instrument..."
+      #instrumentInput
+      [formControl]="instrumentControl"
+      [matAutocomplete]="instrumentAuto"
+      [matChipInputFor]="instrumentList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="true"
+	  (focus)="onFocus()" />
+		
+	<mat-autocomplete #instrumentAuto="matAutocomplete" (optionSelected)="selected($event)">
+	    <mat-option *ngFor="let instrument of instrumentFilteredList | async" [value]="instrument">{{instrument.tradingsymbol}}</mat-option>
+	</mat-autocomplete>
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="addIntruments('nifty50')">Add Nifty 50 Stocks</button>

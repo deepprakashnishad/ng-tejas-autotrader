@@ -1,0 +1,62 @@
+<div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="2%">
+  <div fxFlex="40%">
+    <mat-list *ngIf="operators.length>0">
+      <mat-list-item *ngFor="let operator of operators;let i=index;" (click)="selectTechnicalOperator(i)">
+        <h3 matLine>{{operator.name}}</h3>
+        <p *ngIf="operator.is_unary">Unary</p>
+        <p matLine>
+          <span>{{operator.description}}</span>
+        </p>
+        <button color="warn" mat-icon-button (click)="onRemove(operator._id, i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+    <h5 *ngIf="operators.length===0">No operators found</h5>
+  </div>
+  <div fxFlex="50%" fxFlexAlign="center">
+    <form [formGroup]="technicalForm">
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-checkbox [(ngModel)]="selectedTechnicalOperator.is_unary" 
+        labelPosition="before" formControlName="isUnary">Is Unary</mat-checkbox>
+      </p>
+      <mat-action-list>
+        <mat-list-item *ngFor="let item of selectedTechnicalOperator.tech_args | keyvalue;let i=index;">
+          <h4 matLine>{{item.key}}</h4> 
+          <p matLine>Default Value - {{item.value}}</p>
+          <button color="warn" mat-icon-button (click)="removeFromArgList(item)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-action-list>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Argument Name</mat-label>
+          <input matInput formControlName="argname">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Default Value</mat-label>
+          <input matInput formControlName="argDefaultValue">
+        </mat-form-field>
+        <button mat-icon-button (click)="addToArgList()"><mat-icon>add</mat-icon></button>
+      </p>
+      <div class="button-row">
+        <button mat-raised-button type="reset" color="primary" (click)="save()">Save</button>
+        <button mat-raised-button type="reset" color="warn" (click)="reset()">Reset</button>
+      </div>
+    </form>
+  </div>
+</div>

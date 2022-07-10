@@ -1,0 +1,40 @@
+<h4>{{stock}}</h4>
+<div fxLayout="column">
+  <mat-form-field>
+    <mat-label>Select a position</mat-label>
+    <mat-select [(ngModel)]="transactionType">
+      <mat-option value="BUY">BUY</mat-option>
+      <mat-option value="SELL">SELL</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input type="text" placeholder="Entry Price" matInput [(ngModel)]="entryPrice" (input)="calcQtyAndRatio()">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input type="text" placeholder="Stoploss" matInput [(ngModel)]="stoploss" (input)="calcQtyAndRatio()">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input type="text" placeholder="Target" matInput [(ngModel)]="target" (input)="calcQtyAndRatio()">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Risk to take</mat-label>
+    <input matInput placeholder="Risk" [(ngModel)]="risk_per_trade" (input)="calcQtyAndRatio()">
+    <mat-hint>Usually 2% of account size</mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Quantity</mat-label>
+    <input matInput placeholder="Quantity" [(ngModel)]="quantity">
+  </mat-form-field>
+  <div>
+    <h3>
+      Risk reward ratio: 
+      <span style="background-color: lightgreen;" *ngIf="risk_reward_ratio < 0.6">{{risk_reward_ratio | number:'0.2-2'}}</span>
+      <span style="background-color: lightcoral;" *ngIf="risk_reward_ratio >= 0.6">{{risk_reward_ratio| number:'0.2-2'}}</span>
+    </h3>
+  </div>
+  <div fxLayout fxLayoutAlign="end center" fxLayoutGap="15px">
+    <button mat-raised-button (click)="dialogRef.close()">Cancel</button>
+    <button mat-raised-button color="accent" (click)="remove()" *ngIf="this.data['favorite']">Remove</button>
+    <button mat-raised-button color="primary" (click)="done()">Done</button>
+  </div>
+</div>

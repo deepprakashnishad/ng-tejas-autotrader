@@ -1,0 +1,112 @@
+<div fxLayout="column" fxFlexAlign>
+  <div fxLayout fxFill fxLayoutAlign="space-between center" fxLayoutGap="30px" style="border: 1px;">
+    <div fxLayout="column">
+      <div fxLayout fxLayoutAlign="space-around center" fxLayoutGap="15px">
+        <div [hidden]="selectedStockIndex==0">
+          <button mat-raised-button (click)="changeSelectedDate(-1)"> 
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </div>
+        <h4>{{selectedDate.getDate()}}-{{selectedDate.getMonth()+1}}-{{selectedDate.getDate()}}, {{days[selectedDate.getDay()]}}</h4>
+        <div>
+          <button mat-raised-button (click)="changeSelectedDate(1)">
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div flex>
+    <div *ngIf="stockSelectionResults.length == 0">
+      <h3>No data found for the selected stock</h3>
+    </div>
+    <div [hidden]="stockSelectionResults.length == 0">
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Stock/Instrument">
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Displayed Columns</mat-label>
+        <mat-select 
+          [formControl]="columnsToDisplayControl" 
+          multiple 
+          (selectionChange)="displayedColumnModified($event)"
+          [selected]="displayedColumns">
+          <mat-option *ngFor="let col of displayedColumns" [value]="col">{{col}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <ng-container matColumnDef="stock">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Stock </th>
+          <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="entryPrice">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Entry Price </th>
+          <td mat-cell *matCellDef="let element; let i=index">
+            <mat-form-field class="full-width">
+              <input type="text" 
+              matInput [(ngModel)]="element.entryPrice" (input)="calcQtyAndRatio('entryPrice', i)">
+            </mat-form-field>
+          </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
+          <td mat-cell *matCellDef="let element"> {{element.quantity | number:'0.2-2'}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="risk_per_trade">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Risk Per Trade </th>
+          <td mat-cell *matCellDef="let element; let i=index">
+            <mat-form-field class="full-width">
+              <input type="text" 
+              matInput [(ngModel)]="element.risk_per_trade" (input)="calcQtyAndRatio('risk_per_trade', i)">
+            </mat-form-field>
+          </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="risk_reward_ratio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Risk Reward Ratio </th>
+          <td mat-cell *matCellDef="let element"> {{element.risk_reward_ratio | number:'0.2-2'}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="stoploss">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Stoploss </th>
+          <td mat-cell *matCellDef="let element; let i=index">
+            <mat-form-field class="full-width">
+              <input type="text" 
+              matInput [(ngModel)]="element.stoploss" (input)="calcQtyAndRatio('stoploss', i)">
+            </mat-form-field>
+          </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="target">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Target </th>
+          <td mat-cell *matCellDef="let element; let i=index">
+            <mat-form-field class="full-width">
+              <input type="text" 
+              matInput [(ngModel)]="element.target" (input)="calcQtyAndRatio('target', i)">
+            </mat-form-field>
+          </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="transactionType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Position </th>
+          <td mat-cell *matCellDef="let element; let i=index">
+             <mat-select [(ngModel)]="element.transactionType" (selectionChange)="calcQtyAndRatio('transactionType', i)">
+              <mat-option value="BUY">BUY</mat-option>
+              <mat-option value="SELL">SELL</mat-option>
+            </mat-select> 
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+      </table>
+      <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>

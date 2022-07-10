@@ -1,0 +1,41 @@
+<div class="padding-20" fxLayout fxLayoutAlign="space-around" fxLayoutGap="20px">
+  <mat-form-field class="full-width">
+    <input type="text" placeholder="Name" matInput [(ngModel)]="screener.name" >
+  </mat-form-field>
+  <mat-form-field  class="full-width" appearance="outline">
+    <mat-label>Description</mat-label>
+    <textarea type="text" placeholder="Description" matInput matLine="3"
+    [(ngModel)]="screener.description" #description="ngModel">{{screener.description}}</textarea>
+  </mat-form-field>
+  <mat-form-field fxFlex=10%>
+    <mat-label>Select an option</mat-label>
+    <mat-select [(value)]="interval">
+      <mat-option value="1 Minute">1 Minute</mat-option>
+      <mat-option value="3 Minutes">3 Minutes</mat-option>
+      <mat-option value="5 Minutes">5 Minutes</mat-option>
+      <mat-option value="15 Minutes">15 Minutes</mat-option>
+      <mat-option value="30 Minutes">30 Minutes</mat-option>
+      <mat-option value="1 Hour">1 Hour</mat-option>
+      <mat-option value="1 Day">1 Day</mat-option>
+      <mat-option value="Week">Week</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Select a position</mat-label>
+    <mat-select [(value)]="screener.transaction_type">
+      <mat-option value="BUY">BUY</mat-option>
+      <mat-option value="SELL">SELL</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-icon-button color="primary" (click)="saveScreener()"><mat-icon>save</mat-icon></button>
+</div>
+<button mat-raised-button color="primary" (click)="addNewEntryCondition()"><mat-icon>add</mat-icon> Add new condition</button>
+<mat-item>
+  <mat-list *ngFor="let condition of screener.entry_conditions; let i=index;">
+    <div fxLayout="row" fxLayoutAlign="">
+      <app-technical-condition fxFlex="90%" (technicalCondModified)="entryConditionModified(i, $event)"
+      [technicalCondition]="condition"></app-technical-condition>
+      <button mat-icon-button color="warn" fxFlex="10%"><mat-icon>delete</mat-icon></button>
+    </div>
+  </mat-list>
+</mat-item>

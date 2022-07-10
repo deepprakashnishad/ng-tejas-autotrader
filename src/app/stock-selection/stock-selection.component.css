@@ -1,0 +1,17 @@
+table {
+    width: 100%;
+}
+
+tr.mat-row:hover {
+    background-color: #a5a5a547;
+}
+
+.bg-green{
+    color: white;
+    background-color: green;
+}
+
+.bg-red{
+    color: white;
+    background-color: red;
+}

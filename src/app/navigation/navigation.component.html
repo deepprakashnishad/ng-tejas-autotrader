@@ -1,0 +1,14 @@
+<mat-toolbar class="navbar" color="primary">
+	<span>Gaura Academy</span>
+	<div>
+        <span class="nav-item" [routerLink]="['/']">Home</span>
+		<span class="nav-item" *ngIf="isLoggedIn" (click)="navigate('/dashboard')">Dashboard</span>
+		<span class="nav-item" (click)="navigate('/derivative')">DA Results</span>
+		<span class="nav-item" (click)="navigate('/screener')">Screener</span>
+		<span class="nav-item" (click)="navigate('/strategy/create')">Create Strategy</span>
+		<span class="nav-item" (click)="navigate('/technical/create')">Technicals</span>
+		<span class="nav-item" (click)="navigate('/operator/create')">Operators</span>
+		<span class="nav-item" *ngIf="!isLoggedIn" (click)="navigate('/login')">Sign In</span>
+		<span class="nav-item" *ngIf="isLoggedIn" (click)="logout()">Sign Out</span>
+	</div>
+</mat-toolbar>

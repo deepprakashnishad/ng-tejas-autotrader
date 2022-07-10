@@ -1,0 +1,160 @@
+<div fxLayout="column" fxFlexAlign>
+  <div fxLayout fxFill fxLayoutAlign="space-between center" fxLayoutGap="30px" style="border: 1px;">
+    <div fxLayout="column">
+      <app-instrument-selector (selectedInstrumentModified)="stockModified($event)"></app-instrument-selector>
+      <div fxLayout fxLayoutAlign="space-around center" fxLayoutGap="15px">
+        <div [hidden]="selectedStockIndex==0">
+          <button mat-raised-button (click)="refresh(stocks[selectedStockIndex-1])"> 
+            <mat-icon>arrow_back</mat-icon> {{stocks[selectedStockIndex-1]}}
+          </button>
+        </div>
+        <h4>{{stocks[selectedStockIndex]}}</h4>
+        <div [hidden]="selectedStockIndex==stocks.length">
+          <button mat-raised-button (click)="refresh(stocks[selectedStockIndex+1])">
+            {{stocks[selectedStockIndex+1]}} <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="column" fxLayoutGap="5px" *ngIf="derivativeAnalysisResults.length > 0">
+      <div fxLayout fxLayoutGap="20px">
+        <h4>~OI: {{derivativeAnalysisResults[0].coi_change | number: '0.2-2'}}%</h4>
+        <h4>~Price: {{derivativeAnalysisResults[0].price_change | number: '0.2-2'}}%</h4>
+        <h4>~Delivery: {{derivativeAnalysisResults[0].delivery_change | number: '0.2-2'}}%</h4>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20px">
+        <h4
+          [class.bg-green]="derivativeAnalysisResults[0].pcr < 0.4"
+          [class.bg-red]="derivativeAnalysisResults[0].pcr > 2.1">
+          PCR: {{derivativeAnalysisResults[0].pcr | number: '0.1-1'}}</h4>
+        <h4 [class.bg-green]="derivativeAnalysisResults[0].pcr_of_changed_oi < -200 && derivativeAnalysisResults[0].net_ce_change < 0"
+        [class.bg-red]="derivativeAnalysisResults[0].pcr_of_changed_oi < -200 && derivativeAnalysisResults[0].net_pe_change < 0">
+          ~PCR: {{derivativeAnalysisResults[0].pcr_of_changed_oi | number: '0.1-1'}}%</h4>
+        <h4 
+          [class.bg-green]="derivativeAnalysisResults[0].net_ce_change_pct < -1"
+          [class.bg-red]="derivativeAnalysisResults[0].net_ce_change_pct > 1">
+          ~CE: {{derivativeAnalysisResults[0].net_ce_change_pct | number: '0.1-1'}}%</h4>
+        <h4 [class.bg-green]="derivativeAnalysisResults[0].net_pe_change_pct > 1"
+          [class.bg-red]="derivativeAnalysisResults[0].net_pe_change_pct < -1">
+          ~PE: {{derivativeAnalysisResults[0].net_pe_change_pct | number: '0.1-1'}}%</h4>
+      </div>
+    </div>
+    <div fxLayout fxFlex>
+      <table>
+        <tr><thead>Max Pain for CE</thead></tr>
+        <tr>
+          <th>Strike Price</th>
+          <th>Lot Qty</th>
+        </tr>
+        <tr *ngFor="let item of derivativeAnalysisResults[0]?.max_pain_ce | keyvalue">
+          <td>{{item.key}}</td>
+          <td>{{item.value}}</td>
+        </tr>
+      </table>
+      <table>
+        <tr><thead>Max Pain for PE</thead></tr>
+        <tr>
+          <th>Strike Price</th>
+          <th>Lot Qty</th>
+        </tr>
+        <tr *ngFor="let item of derivativeAnalysisResults[0]?.max_pain_pe | keyvalue : keyDescOrder">
+          <td>{{item.key}}</td>
+          <td>{{item.value}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div flex>
+    <div *ngIf="derivativeAnalysisResults.length == 0">
+      <h3>No data found for the selected stock</h3>
+    </div>
+    <div *ngIf="derivativeAnalysisResults.length > 0">
+      <div (mouseenter)="trapBodyScroll()" (mouseleave)=releaseBodyScroll() class="chart-wrapper primary" style="overflow-y: hidden;">
+        <canvas baseChart 
+            [datasets]="lineChartData" 
+            [labels]="lineChartLabels" 
+            [options]="lineChartOptions"
+            [legend]="lineChartLegend" 
+            [chartType]="lineChartType" 
+            [plugins]="lineChartPlugins">
+        </canvas>
+      </div>
+      <div (mouseenter)="trapBodyScroll()" (mouseleave)=releaseBodyScroll() class="chart-wrapper secondary">
+        <canvas baseChart 
+            [datasets]="barChartData" 
+            [labels]="lineChartLabels" 
+            [options]="barChartOptions"
+            [legend]="lineChartLegend" 
+            [chartType]="lineChartType" 
+            [plugins]="lineChartPlugins">
+        </canvas>
+      </div>
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Stock/Instrument">
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Displayed Columns</mat-label>
+        <mat-select 
+          [formControl]="columnsToDisplayControl" 
+          multiple 
+          (selectionChange)="displayedColumnModified($event)"
+          [selected]="displayedColumns">
+          <mat-option *ngFor="let col of displayedColumns" [value]="col">{{col}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+        <ng-container matColumnDef="datetime">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.datetime}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Position </th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="price_change">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ~ Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.price_change | number:'0.2-2'}}% </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="delivery_change">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ~ Delivery </th>
+          <td mat-cell *matCellDef="let element"> {{element.delivery_change | number:'0.2-2'}}% </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="coi_change">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ~ Open Interest </th>
+          <td mat-cell *matCellDef="let element"> {{element.coi_change | number:'0.2-2'}}% </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="open">
+          <th mat-header-cell *matHeaderCellDef> Open </th>
+          <td mat-cell *matCellDef="let element"> {{element.open}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="high">
+          <th mat-header-cell *matHeaderCellDef> High </th>
+          <td mat-cell *matCellDef="let element"> {{element.high}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="low">
+          <th mat-header-cell *matHeaderCellDef> Low </th>
+          <td mat-cell *matCellDef="let element"> {{element.low}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="close">
+          <th mat-header-cell *matHeaderCellDef> Close </th>
+          <td mat-cell *matCellDef="let element"> {{element.close}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+      </table>
+      <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>
