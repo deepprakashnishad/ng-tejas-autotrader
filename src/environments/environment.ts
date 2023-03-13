@@ -4,7 +4,11 @@
 
 export const environment = {
   production: false,
-  baseurl: "http://127.0.0.1:8000/api/"
+  baseurl: "http://127.0.0.1:5000/api/",
+
+  zerodha:{
+    api_key: "5za4lsjnw8rkesqm"
+  }
 };
 
 /*

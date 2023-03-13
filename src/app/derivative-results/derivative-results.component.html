@@ -140,7 +140,7 @@
       <div class="example-element-detail"
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
             [style.height]="element.expanded ? 'unset' : '0 !important'">
-          <table class="pivot-table">
+          <table class="pivot-table" *ngIf="element.pivot_points!==null">
             <tr>
               <th></th>
               <th><h4>Previous Day</h4></th>

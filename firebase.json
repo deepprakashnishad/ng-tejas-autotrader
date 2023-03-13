@@ -1,12 +1,12 @@
 {
   "hosting": {
-    "public": "dist/ng-kite-autotrader",
+    "public": "dist",
     "rewrites":[{
-      "source": "**",
-      "destination": "/index.html"
-    }, {
       "source": "/api/:path*",
       "destination": "https://kiteautotrader.herokuapp.com/api/:path"
+    }, {
+      "source": "**",
+      "destination": "/index.html"
     }],
     "ignore": [
       "firebase.json",

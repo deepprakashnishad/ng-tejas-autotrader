@@ -7,12 +7,19 @@
       <button color="primary" mat-icon-button [routerLink]="['/strategy/create/', strategy._id]">
         <mat-icon>file_copy</mat-icon>
       </button>
-      <button color="primary" mat-icon-button (click)="backtest(strategy)">
+      <button color="primary" mat-icon-button (click)="backtest(strategy);$event.stopPropagation()">
         <mat-icon>timer</mat-icon>
       </button>
-      <button color="primary" mat-icon-button (click)="deploy(strategy)">
-        <mat-icon>cloud_upload</mat-icon>
-      </button>
+      <ng-container *ngIf="isDeployed(strategy); else notDeployedTemplate">
+        <button color="primary" mat-icon-button (click)="finish(strategy);$event.stopPropagation()" matTooltip="Finish Strategy">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </ng-container>
+      <ng-template #notDeployedTemplate>
+        <button color="primary" mat-icon-button (click)="deploy(strategy);$event.stopPropagation()" matTooltip="Deploy Strategy">
+          <mat-icon>cloud_upload</mat-icon>
+        </button>
+      </ng-template>
       <button color="primary" mat-icon-button [routerLink]="['/strategy/update/', strategy._id]">
           <mat-icon>edit</mat-icon>
       </button>

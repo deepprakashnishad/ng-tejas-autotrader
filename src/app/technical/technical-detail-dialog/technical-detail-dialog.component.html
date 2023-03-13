@@ -12,12 +12,14 @@
           <mat-option value="high">high</mat-option>
           <mat-option value="low">low</mat-option>
           <mat-option value="close">close</mat-option>
+          <mat-option value="volume">volume</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field *ngIf="techargs.indexOf('percent_or_value')!==-1">
         <mat-select [(value)]="technical.tech_args['percent_or_value']">
           <mat-option value="percent">percent</mat-option>
           <mat-option value="value">value</mat-option>
+          <mat-option value="absolute">absolute</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field *ngIf="techargs.indexOf('percent_or_value')!==-1">

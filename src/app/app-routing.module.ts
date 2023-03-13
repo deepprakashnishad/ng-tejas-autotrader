@@ -10,10 +10,27 @@ import { ScreenerComponent } from './screener/screener.component';
 import { CreateScreenerComponent } from './screener/create-screener/create-screener.component';
 import { ScreenerResultComponent } from './screener/screener-result/screener-result.component'
 import { StockSelectionComponent } from './stock-selection/stock-selection.component';
+import { LoginComponent } from './authentication/login/login.component';
+import { LiveIndexAnalysisComponent } from './live-index-analysis/live-index-analysis.component';
+import { KiteAuthenticationComponent } from './authentication/kite-authentication/kite-authentication.component';
 
 const routes: Routes = [
   	{
 		path: '', component: StrategyComponent, data:{title: 'Strategy List', isSidenav: false}
+	},
+	{
+		path: 'strategy', 
+		component: StrategyComponent,  
+		data: {
+			title: 'Strategies'
+		}
+	},
+	{
+		path: 'strategy/my-strategies', 
+		component: StrategyComponent,  
+		data: {
+			title: 'My Strategies'
+		}
 	},	
 	{
 		path: 'strategy/create', 
@@ -106,6 +123,27 @@ const routes: Routes = [
 			title: 'Selected Stocks'
 		}
 	},
+	{
+		path: 'login', 
+		component: LoginComponent,  
+		data: {
+			title: 'Login'
+		}
+	},
+	{
+		path: 'kite/verify_login', 
+		component: KiteAuthenticationComponent,  
+		data: {
+			title: 'Authentication'
+		}
+	},
+	{
+		path: 'live-index-analysis', 
+		component: LiveIndexAnalysisComponent,  
+		data: {
+			title: 'Live Index Analysis'
+		}
+	}
 ];
 
 @NgModule({

@@ -1,0 +1,51 @@
+.chart-wrapper{
+    display: block;
+    resize: both;
+    overflow: auto;
+}
+
+.center{
+    text-align: center;
+}
+
+div.primary{
+    width: 700px;
+}
+
+table{
+    border: 1px solid;
+}
+
+.mat-cell {
+  margin: 0px 4px;
+  padding: 8px 8px 8px 0;
+  text-align: center;
+}
+
+.light-red{
+    background-color: #fd9995;
+}
+
+.red{
+    background-color: red;
+    color:white;
+}
+
+.dark-red{
+    background-color: darkred;
+    color: white;
+}
+
+.light-green{
+    background-color: lightgreen;
+}
+
+.green{
+    background-color: green;
+    color: white;
+}
+
+.dark-green{
+    background-color: darkgreen;
+    color: white;
+}

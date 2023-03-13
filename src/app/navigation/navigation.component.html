@@ -1,14 +1,19 @@
 <mat-toolbar class="navbar" color="primary">
-	<span>Gaura Academy</span>
+	<span>Auto-Trader</span>
 	<div>
         <span class="nav-item" [routerLink]="['/']">Home</span>
 		<span class="nav-item" *ngIf="isLoggedIn" (click)="navigate('/dashboard')">Dashboard</span>
 		<span class="nav-item" (click)="navigate('/derivative')">DA Results</span>
 		<span class="nav-item" (click)="navigate('/screener')">Screener</span>
-		<span class="nav-item" (click)="navigate('/strategy/create')">Create Strategy</span>
-		<span class="nav-item" (click)="navigate('/technical/create')">Technicals</span>
-		<span class="nav-item" (click)="navigate('/operator/create')">Operators</span>
+		<span class="nav-item" [matMenuTriggerFor]="strategyMenu">Strategies</span>
+		<!-- <span class="nav-item" (click)="navigate('/technical/create')">Technicals</span>
+		<span class="nav-item" (click)="navigate('/operator/create')">Operators</span> -->
 		<span class="nav-item" *ngIf="!isLoggedIn" (click)="navigate('/login')">Sign In</span>
 		<span class="nav-item" *ngIf="isLoggedIn" (click)="logout()">Sign Out</span>
 	</div>
+	<mat-menu #strategyMenu="matMenu">
+		<button mat-menu-item (click)="navigate('/strategy/my-strategies')">My Strategies</button>
+		<button mat-menu-item (click)="navigate('/strategy')">List All Strategies</button>
+		<button mat-menu-item (click)="navigate('/strategy/create')">Create New Strategy</button>
+	</mat-menu>
 </mat-toolbar>

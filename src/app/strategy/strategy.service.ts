@@ -17,8 +17,8 @@ export class StrategyService {
       this.strategyUrl = environment.baseurl + 'strategy';
   }
 
-  getStrategyList(): Observable<Strategy[]>{
-    let url = environment.baseurl + 'strategies'
+  getStrategyList(strategiesFor: String="All"): Observable<Strategy[]>{
+    let url = `${environment.baseurl}strategies?q=${strategiesFor}`;
     return this.http.get<Strategy[]>(url)
   		.pipe(
   			retry(2),
@@ -46,6 +46,14 @@ export class StrategyService {
   deploy(strategyIds): Observable<any> {
     let url = environment.baseurl + `deploy`
     return this.http.post<any>(url, {strategy_ids: strategyIds})
+    .pipe(
+       retry(2),
+       catchError(this.handleError('Deploy Strategy', null)));
+  }
+
+  updateDeployedStrategies(strategyIds): Observable<any> {
+    let url = environment.baseurl + `deploy`
+    return this.http.put<any>(url, {strategy_ids: strategyIds})
     .pipe(
        retry(2),
        catchError(this.handleError('Deploy Strategy', null)));

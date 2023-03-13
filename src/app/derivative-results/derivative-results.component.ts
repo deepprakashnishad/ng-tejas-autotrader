@@ -125,6 +125,8 @@ export class DerivativeResultsComponent implements OnInit {
   }
 
   getPivotTrend(data){
+    if(data===null || data['pivot_points']===null)
+      return "blue";
     let width = data['pivot_points']['next']['width']
     if (width < 0.4 || width > 1.2){
       if(data['pivot_points']['next']['bc'] >= data['pivot_points']['current']['pivot'])

@@ -26,7 +26,7 @@ import { CreateTechnicalOperatorComponent } from './technical-operator/create-te
 import { FilterPipe } from './pipes/filter.pipe';
 import { DerivativeResultsComponent } from './derivative-results/derivative-results.component';
 import {DerivativeAnalysisDetailComponent} from './derivative-results/derivative-analysis-detail/derivative-analysis-detail.component';
-import { ChartsModule } from 'ng2-charts';
+import { ChartsModule, ThemeService } from 'ng2-charts';
 import { InstrumentSelectorComponent } from './instrument/instrument-selector/instrument-selector.component';
 import { ScreenerComponent } from './screener/screener.component';
 import { CreateScreenerComponent } from './screener/create-screener/create-screener.component';
@@ -35,6 +35,13 @@ import { StockSelectionComponent } from './stock-selection/stock-selection.compo
 import { StockSelectorDialogComponent } from './stock-selection/stock-selector-dialog/stock-selector-dialog.component';
 import { StockSelectionService } from './stock-selection/stock-selection.service';
 import { TrapScrollDirective } from './directives/trap-scroll.directive';
+import { LoginComponent } from './authentication/login/login.component';
+import { KiteAuthenticationComponent } from './authentication/kite-authentication/kite-authentication.component';
+import { AuthenticationService } from './authentication/authentication.service';
+import { LiveIndexAnalysisService } from './live-index-analysis/live-index-analysis.service';
+import { httpInterceptorProviders } from './http-interceptors/index';
+import { LiveIndexAnalysisComponent } from './live-index-analysis/live-index-analysis.component';
+
 
 const notifierDefaultOptions: NotifierOptions = {
    position: {
@@ -93,6 +100,7 @@ const notifierDefaultOptions: NotifierOptions = {
       NavigationComponent,
       BacktestDialogComponent,
       FilterPipe,
+      LoginComponent,
       DerivativeResultsComponent,
       DerivativeAnalysisDetailComponent,
       InstrumentSelectorComponent,
@@ -100,7 +108,9 @@ const notifierDefaultOptions: NotifierOptions = {
       CreateScreenerComponent,
       ScreenerResultComponent,
       StockSelectionComponent,
+      LiveIndexAnalysisComponent,
       StockSelectorDialogComponent,
+      KiteAuthenticationComponent,
       TrapScrollDirective
    ],
    imports: [
@@ -121,9 +131,13 @@ const notifierDefaultOptions: NotifierOptions = {
       NO_ERRORS_SCHEMA
    ],
    providers: [
-      NotifierService,
-      StrategyService,
-      StockSelectionService
+        httpInterceptorProviders,
+        NotifierService,
+        StrategyService,
+        StockSelectionService,
+        AuthenticationService,
+        ThemeService,
+        LiveIndexAnalysisService
    ],
    entryComponents: [
       TechnicalDetailDialogComponent,
